@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JADE Icon Picker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div id="start-screen">
+    <div class="rotating-bg-text">I LOVE BRANDON BRESSLER 💚</div>
+    <h1>JADE Icon Picker</h1>
+    <p>Select your favorite JADE icons across 3 phases! 🔥💎</p>
+    <button onclick="startPhase(1)">Start</button>
+  </div>
+
+  <div id="game-phase" class="hidden">
+    <h2 id="phase-title">Phase 1: Brandon is Hot 🔥</h2>
+    <div id="icon-grid"></div>
+    <button onclick="nextPhase()" id="next-button">Next Phase ➜</button>
+  </div>
+
+  <div id="result-screen" class="hidden">
+    <h2>Final Pick 🎉</h2>
+    <p>You picked this as the cutest JADE icon:</p>
+    <img id="final-pick" src="" alt="Final Pick">
+    <button onclick="sendToSierra()">Send to Sierra 💌</button>
+    <div id="final-message">You're my everything ❤️</div>
+    <canvas id="confetti"></canvas>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
