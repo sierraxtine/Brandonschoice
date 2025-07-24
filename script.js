@@ -116,3 +116,46 @@ function launchConfetti() {
   }
   animate();
 }
+let previewedSrc = null;
+let previewedImg = null;
+
+function renderIcons() {
+  const grid = document.getElementById('icon-grid');
+  grid.innerHTML = '';
+  document.getElementById('phase-title').textContent =
+    currentPhase === 1 ? "Phase 1: Brandon is Hot 🔥" :
+    currentPhase === 2 ? "Phase 2: Brandon is Beautiful ✨" :
+    "Phase 3: Brandon is Cute 💖";
+
+  const iconList = currentPhase === 1 ? icons :
+                   currentPhase === 2 ? selectedPhase1 :
+                   selectedPhase2;
+
+  iconList.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.onclick = () => previewIcon(img, src);
+    if ((currentPhase === 1 && selectedPhase1.includes(src)) ||
+        (currentPhase === 2 && selectedPhase2.includes(src)) ||
+        (currentPhase === 3 && finalPick === src)) {
+      img.classList.add("selected");
+    }
+    grid.appendChild(img);
+  });
+}
+
+function previewIcon(img, src) {
+  previewedSrc = src;
+  previewedImg = img;
+  document.getElementById('preview-img').src = src;
+  document.getElementById('preview-modal').classList.remove('hidden');
+}
+
+function confirmSelection() {
+  toggleSelection(previewedImg, previewedSrc);
+  closePreview();
+}
+
+function closePreview() {
+  document.getElementById('preview-modal').classList.add('hidden');
+}
