@@ -32,3 +32,14 @@
   <script src="script.js"></script>
 </body>
 </html>
+<!-- Preview Modal -->
+<div id="preview-modal" class="hidden">
+  <div id="preview-overlay" onclick="closePreview()"></div>
+  <div id="preview-content">
+    <img id="preview-img" src="" alt="Preview">
+    <div class="preview-buttons">
+      <button onclick="confirmSelection()">Select This Icon ✅</button>
+      <button onclick="closePreview()">Cancel ❌</button>
+    </div>
+  </div>
+</div>
