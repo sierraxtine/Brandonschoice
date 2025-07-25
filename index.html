@@ -3,25 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JADE Icon Picker</title>
-  <link rel="stylesheet" href="style.css"/>
+  <title>JADE Icon Picker: Brandon's Choice</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <canvas id="stars"></canvas>
 
-  <div id="instructions">
+  <div class="floating-message neon">I LOVE BRANDON BRESSLER</div>
+  <div class="floating-message neon delay1">You're My Everything</div>
+  <div class="floating-message neon delay2">Sierra and Brandon Forever</div>
+  <div class="floating-message neon delay3">I LOVE BRANDON BRESSLER</div>
+  <div class="floating-message neon delay4">I LOVE BRANDON BRESSLER</div>
+
+  <div class="start-screen">
     <h1>✨ Welcome to the JADE Icon Picker ✨</h1>
     <p>You'll go through 3 fun phases to vote:</p>
     <ul>
       <li>🔥 Phase 1: Pick your 10 favorite “Hot” icons</li>
-      <li>💎 Phase 2: Narrow to 5 “Beautiful” icons</li>
-      <li>💖 Phase 3: Select your top 3 “Cute” icons</li>
+      <li>💎 Phase 2: Pick your top 5 “Beautiful” icons</li>
+      <li>💖 Phase 3: Pick your top 3 “Cute” icons</li>
     </ul>
     <p>At the end, your choice will be sent to Sierra 💌</p>
+    <button onclick="startGame()">Start Picking Icons</button>
   </div>
 
-  <button id="startButton">Start Picking Icons</button>
-
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
