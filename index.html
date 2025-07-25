@@ -13,26 +13,26 @@
     <h2 class="floating-msg left">JADE loves you.</h2>
     <h2 class="floating-msg right">You're beautiful, B!</h2>
     <h2 class="floating-msg center">You're my favorite human.</h2>
-    <button class="start-btn neon" onclick="startApp()">Start Picking Icons</button>
+    <button class="start-btn neon" onclick="startPicker()">Start Picking Icons</button>
   </div>
 
-  <div id="phase-container" class="screen hidden">
+  <div id="phase-screen" class="screen hidden">
     <h2 id="phase-title">Phase 1: Select your Top 10</h2>
     <div id="icons-grid"></div>
-    <button class="next-btn neon" onclick="nextPhase()">Next</button>
   </div>
 
   <div id="final-screen" class="screen hidden">
     <h2>You're done! 🥳</h2>
     <p>Click below to send your final picks to Sierra.</p>
-    <button class="send-btn neon" onclick="sendToSierra()">Send to Sierra</button>
+    <div id="final-results"></div>
+    <button id="send-button" class="send-btn neon">Send to Sierra</button>
     <p id="send-status"></p>
   </div>
 
-  <!-- Preview Modal -->
+  <!-- Image Preview Modal -->
   <div id="preview-modal" class="modal hidden">
-    <span class="close" onclick="closePreview()">&times;</span>
-    <img id="preview-img" src="" alt="Preview" />
+    <span id="close-preview" class="close">&times;</span>
+    <img id="preview-image" src="" alt="Preview" />
   </div>
 
   <script src="script.js"></script>
