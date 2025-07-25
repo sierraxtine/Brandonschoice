@@ -24,10 +24,11 @@ body, html {
   display: none;
 }
 
-/* Start Screen Visuals */
+/* Start Screen Fix + Enhancements */
 #start-screen {
   position: relative;
   overflow: hidden;
+  z-index: 0;
 }
 
 .background-animation::before {
@@ -38,9 +39,10 @@ body, html {
   width: 100%;
   height: 100%;
   background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-  animation: glitter 10s linear infinite;
-  opacity: 0.5;
+  animation: glitter 15s linear infinite;
+  opacity: 0.4;
   z-index: 0;
+  pointer-events: none;
 }
 
 @keyframes glitter {
@@ -49,16 +51,16 @@ body, html {
 }
 
 .rotating-love {
-  font-size: 3em;
-  color: #00ffcc;
+  font-size: 3.5em;
+  color: #00fff7;
   font-weight: bold;
-  text-shadow: 0 0 10px #0ff;
-  animation: rotate 20s linear infinite;
+  text-shadow: 0 0 20px #00fff7, 0 0 40px #ff00f7;
+  animation: rotate 12s linear infinite;
   position: absolute;
   top: 10%;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1;
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -69,21 +71,23 @@ body, html {
 
 .floating-text {
   position: absolute;
-  color: #ff66ff;
-  font-size: 1.2em;
-  animation: float 10s ease-in-out infinite alternate;
-  z-index: 1;
+  font-size: 1.3em;
+  color: #ff77ff;
+  text-shadow: 0 0 10px #ff00f7;
+  animation: float 8s ease-in-out infinite alternate;
+  z-index: 3;
+  pointer-events: none;
 }
 
 .floating-text.delay1 {
-  top: 30%;
-  left: 10%;
+  top: 35%;
+  left: 5%;
   animation-delay: 1s;
 }
 
 .floating-text.delay2 {
-  top: 50%;
-  right: 15%;
+  top: 60%;
+  right: 10%;
   animation-delay: 2s;
 }
 
@@ -92,23 +96,27 @@ body, html {
   100% { transform: translateY(-20px); opacity: 1; }
 }
 
-/* Button */
-button {
+#start-button {
+  position: relative;
+  z-index: 5;
   margin-top: 2em;
   padding: 1em 2em;
-  font-size: 1.2em;
+  font-size: 1.4em;
+  font-weight: bold;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #00ffcc, #0099ff);
-  color: black;
-  box-shadow: 0 0 15px #00ffcc;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #00fff7, #ff00f7);
+  color: #fff;
+  box-shadow: 0 0 25px #00fff7, 0 0 35px #ff00f7;
   cursor: pointer;
   transition: transform 0.3s ease;
-  z-index: 2;
+  text-shadow: 0 0 5px black;
 }
 
-button:hover {
-  transform: scale(1.05);
+#start-button:hover {
+  transform: scale(1.08);
+  background: linear-gradient(145deg, #ff00f7, #00fff7);
+  box-shadow: 0 0 35px #ff00f7, 0 0 45px #00fff7;
 }
 
 /* Icon Grid */
