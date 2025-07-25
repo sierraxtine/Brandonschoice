@@ -1,91 +1,98 @@
-body, html {
+body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  height: 100%;
-  background-color: black;
-  font-family: 'Arial', sans-serif;
+  background: black;
+  font-family: 'Helvetica Neue', sans-serif;
+  color: white;
 }
 
-canvas#stars {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-.start-screen {
+.start-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.7);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.5);
   border: 2px solid cyan;
   border-radius: 20px;
-  padding: 40px;
-  text-align: center;
-  z-index: 2;
+  padding: 30px;
   box-shadow: 0 0 30px cyan;
-  color: white;
+  z-index: 2;
 }
 
-.start-screen h1 {
+.start-container h1 {
   font-size: 2rem;
   margin-bottom: 10px;
 }
 
-.start-screen ul {
+.start-container ul {
   list-style: none;
   padding: 0;
-  margin: 20px 0;
+  margin: 10px 0 20px;
 }
 
-.start-screen li {
+.start-container li {
   margin: 8px 0;
-  font-size: 1.1rem;
 }
 
-.start-screen button {
+.start-container button {
   padding: 12px 30px;
-  font-size: 1.1rem;
+  font-size: 1rem;
   border: none;
-  border-radius: 25px;
+  border-radius: 50px;
   background: linear-gradient(90deg, cyan, magenta);
   color: black;
   font-weight: bold;
+  box-shadow: 0 0 25px cyan;
   cursor: pointer;
-  box-shadow: 0 0 20px cyan;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
-.start-screen button:hover {
-  transform: scale(1.1);
+.start-container button:hover {
+  transform: scale(1.05);
 }
 
-/* Floating messages */
+/* Stars */
+.stars::before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  box-shadow: 
+    50px 100px white, 150px 200px white, 250px 300px white,
+    350px 400px white, 450px 500px white, 550px 600px white,
+    650px 700px white, 750px 800px white, 850px 900px white,
+    950px 1000px white, 1050px 1100px white, 1150px 1200px white;
+  animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+/* Floating Messages */
 .floating-message {
   position: absolute;
-  font-weight: bold;
   font-size: 1.2rem;
-  animation: float 25s linear infinite;
+  font-weight: bold;
+  animation: floatMove 20s linear infinite;
+  opacity: 0.5;
   white-space: nowrap;
-  opacity: 0.9;
-  z-index: 1;
-  pointer-events: none;
 }
 
-.neon {
-  color: hsl(calc(360 * var(--hue, 0.7)), 100%, 70%);
-  text-shadow: 0 0 8px currentColor, 0 0 12px currentColor;
-}
-
-.delay1 { top: 10%; left: 5%; animation-delay: 2s; }
-.delay2 { top: 20%; right: 10%; animation-delay: 4s; }
-.delay3 { bottom: 15%; left: 20%; animation-delay: 6s; }
-.delay4 { bottom: 5%; right: 15%; animation-delay: 8s; }
-
-@keyframes float {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  50% { transform: translateY(-100px) rotate(180deg); opacity: 0.7; }
-  100% { transform: translateY(0) rotate(360deg); opacity: 1; }
+@keyframes floatMove {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-100vw, 100vh) rotate(360deg);
+    opacity: 0.5;
+  }
 }
