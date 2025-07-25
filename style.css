@@ -1,1 +1,184 @@
-...
+/* Reset and global styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle, #000000, #0a0a0a);
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden;
+  color: white;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 2rem;
+  position: relative;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Start screen glitter */
+.glitter::before,
+.glitter::after {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: url('https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif') repeat;
+  animation: glitter 20s linear infinite;
+  opacity: 0.2;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes glitter {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
+}
+
+/* Floating messages */
+.floating-msg {
+  position: absolute;
+  font-size: 1.2rem;
+  opacity: 0.8;
+  color: #ff8dd8;
+  animation: float 5s ease-in-out infinite alternate;
+}
+
+.floating-msg.left { top: 10%; left: 5%; }
+.floating-msg.right { bottom: 10%; right: 5%; }
+.floating-msg.center { top: 50%; transform: translateY(-50%); }
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-20px); }
+}
+
+/* Rotating text */
+.rotating-text {
+  font-size: 2rem;
+  color: #57f1e5;
+  animation: spin 12s linear infinite;
+  position: absolute;
+  transform-origin: center;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%) rotate(0deg);
+  white-space: nowrap;
+}
+
+@keyframes spin {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* Neon buttons */
+button.neon {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  border: none;
+  font-size: 1rem;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #12c2e9, #c471ed, #f64f59);
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 0 10px #f64f59, 0 0 20px #c471ed, 0 0 30px #12c2e9;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 2;
+}
+
+button.neon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 20px #f64f59, 0 0 30px #c471ed, 0 0 40px #12c2e9;
+}
+
+/* Icon grid */
+#icons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+  max-width: 90%;
+  margin-top: 2rem;
+  z-index: 2;
+}
+
+.icon-tile {
+  background: #111;
+  border: 2px solid #444;
+  border-radius: 12px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px #333;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.icon-tile img {
+  width: 100%;
+  max-height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icon-tile:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #888;
+}
+
+.icon-tile select {
+  margin-top: 8px;
+  width: 100%;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
+
+.modal img {
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 10px;
+  border: 2px solid #fff;
+}
+
+.close {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  font-size: 30px;
+  color: white;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* Final screen */
+#final-screen h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+#send-status {
+  margin-top: 1rem;
+  font-style: italic;
+  color: lightgreen;
+}
