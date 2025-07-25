@@ -7,35 +7,21 @@
   <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div id="start-screen">
-    <div class="rotating-banner">I LOVE BRANDON BRESSLER</div>
-    <div class="rotating-banner delay">I LOVE BRANDON BRESSLER</div>
+  <div class="background"></div>
 
-    <div class="floating-message top-left">Sierra and Brandon Forever</div>
-    <div class="floating-message top-right">I love Brandon Bressler</div>
-    <div class="floating-message bottom-center">You're My Everything</div>
-
-    <button id="start-button" onclick="startApp()">Start Picking Icons</button>
+  <div class="floating-text-container">
+    <div class="floating-text pink">Sierra and Brandon Forever</div>
+    <div class="floating-text pink" style="top: 60px;">I love Brandon Bressler</div>
+    <div class="floating-text pink" style="top: 120px;">You're My Everything</div>
   </div>
 
-  <div id="main-app" style="display: none;">
-    <h1>Phase 1: Pick Your Icons</h1>
-    <!-- More app content goes here -->
-  </div>
+  <div class="rotating-text">I LOVE BRANDON BRESSLER</div>
+  <div class="rotating-text rotate2">I LOVE BRANDON BRESSLER</div>
+
+  <button class="start-button" onclick="startPicker()">Start Picking Icons</button>
+
+  <canvas id="glitterCanvas"></canvas>
 
   <script src="script.js"></script>
-
-  <!-- Falling stars script -->
-  <script>
-    function createStar() {
-      const star = document.createElement('div');
-      star.classList.add('star');
-      star.style.left = `${Math.random() * 100}vw`;
-      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-      document.body.appendChild(star);
-      setTimeout(() => star.remove(), 5000);
-    }
-    setInterval(createStar, 100);
-  </script>
 </body>
 </html>
