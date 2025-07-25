@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JADE Icon Picker</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <div class="screen" id="start-screen">
+    <div class="rotating-love">I LOVE BRANDON BRESSLER</div>
+    <div class="rotating-love" style="top: 40px; left: 60%;">I LOVE BRANDON BRESSLER</div>
+    <div class="floating-text delay1">JADE loves you.</div>
+    <div class="floating-text delay2">You're beautiful, B!</div>
+    <div class="floating-text" style="top: 80%; left: 35%;">You're my favorite human.</div>
+    <button id="start-btn">Start Picking Icons</button>
+  </div>
+  <div class="screen hidden" id="phase1">
+    <h2>Phase 1: Pick Your Top 10</h2>
+    <div class="icon-grid" id="grid1"></div>
+    <button id="next1">Next</button>
+  </div>
+  <div class="screen hidden" id="phase2">
+    <h2>Phase 2: Pick Your Top 5</h2>
+    <div class="icon-grid" id="grid2"></div>
+    <button id="next2">Next</button>
+  </div>
+  <div class="screen hidden" id="phase3">
+    <h2>Phase 3: Pick Your Top 3</h2>
+    <div class="icon-grid" id="grid3"></div>
+    <button id="finish">Send to Sierra</button>
+  </div>
+  <div class="screen hidden" id="final-screen">
+    <h2>You're my everything 💚💜</h2>
+    <p>Thank you for helping JADE pick the perfect icon!</p>
+  </div>
+  <div class="modal hidden" id="preview-modal">
+    <span class="close-preview" id="close-preview">&times;</span>
+    <img id="preview-img" src="">
+  </div>
+</body>
+</html>
