@@ -1,38 +1,34 @@
-function startGame() {
-  document.querySelector('.start-screen').style.display = 'none';
+function startPicker() {
+  alert("This will take you to Phase 1!");
+  // Later: window.location.href = "phase1.html";
 }
 
-// Falling stars
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// Floating messages
+const messages = [
+  "I LOVE BRANDON BRESSLER",
+  "Sierra and Brandon Forever",
+  "You're My Everything"
+];
 
-let stars = [];
+const colors = ["#ff00ff", "#00ffff", "#ff9900", "#00ff99", "#ffff00", "#ff3399", "#3399ff", "#cc00ff"];
+const container = document.getElementById("floatingMessagesContainer");
 
-for (let i = 0; i < 300; i++) {
-  stars.push({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    size: Math.random() * 1.5,
-    speed: Math.random() * 0.5 + 0.2
-  });
+function createFloatingMessage() {
+  const msg = document.createElement("div");
+  msg.classList.add("floating-message");
+  msg.innerText = messages[Math.floor(Math.random() * messages.length)];
+  msg.style.color = colors[Math.floor(Math.random() * colors.length)];
+  msg.style.left = Math.random() * 100 + "vw";
+  msg.style.top = Math.random() * 100 + "vh";
+  msg.style.fontSize = (Math.random() * 1.5 + 1) + "rem";
+  msg.style.transform = `rotate(${Math.random() * 360}deg)`;
+  msg.style.animationDuration = `${10 + Math.random() * 10}s`;
+
+  container.appendChild(msg);
+
+  // Remove after animation
+  setTimeout(() => msg.remove(), 25000);
 }
 
-function animateStars() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "white";
-  stars.forEach(star => {
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-    ctx.fill();
-    star.y += star.speed;
-    if (star.y > canvas.height) {
-      star.y = 0;
-      star.x = Math.random() * canvas.width;
-    }
-  });
-  requestAnimationFrame(animateStars);
-}
-
-animateStars();
+// Fill screen with messages
+setInterval(createFloatingMessage, 300);
