@@ -1,98 +1,91 @@
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: black;
-  font-family: 'Helvetica Neue', sans-serif;
-  color: white;
+/* OVERLAY CANVAS FIX */
+#start-screen {
+  position: relative;
+  z-index: 0;
 }
 
-.start-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  background: rgba(0, 0, 0, 0.5);
-  border: 2px solid cyan;
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 0 30px cyan;
-  z-index: 2;
-}
-
-.start-container h1 {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.start-container ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 20px;
-}
-
-.start-container li {
-  margin: 8px 0;
-}
-
-.start-container button {
-  padding: 12px 30px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 50px;
-  background: linear-gradient(90deg, cyan, magenta);
-  color: black;
+#start-button {
+  position: relative;
+  z-index: 5;
+  margin-top: 2em;
+  padding: 1em 2em;
+  font-size: 1.4em;
   font-weight: bold;
-  box-shadow: 0 0 25px cyan;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #00fff7, #ff00f7);
+  color: #fff;
+  box-shadow: 0 0 25px #00fff7, 0 0 35px #ff00f7;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  transition: transform 0.3s ease;
+  text-shadow: 0 0 5px black;
 }
 
-.start-container button:hover {
-  transform: scale(1.05);
+#start-button:hover {
+  transform: scale(1.08);
+  background: linear-gradient(145deg, #ff00f7, #00fff7);
+  box-shadow: 0 0 35px #ff00f7, 0 0 45px #00fff7;
 }
 
-/* Stars */
-.stars::before {
+/* IMPROVED ROTATING MESSAGES */
+.rotating-love {
+  font-size: 3.5em;
+  color: #00fff7;
+  text-shadow: 0 0 20px #00fff7, 0 0 40px #ff00f7;
+  font-weight: bold;
+  animation: rotate 12s linear infinite;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+/* IMPROVED FLOATING TEXT */
+.floating-text {
+  position: absolute;
+  font-size: 1.3em;
+  color: #ff77ff;
+  text-shadow: 0 0 10px #ff00f7;
+  animation: float 8s ease-in-out infinite alternate;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.floating-text.delay1 {
+  top: 35%;
+  left: 5%;
+  animation-delay: 1s;
+}
+
+.floating-text.delay2 {
+  top: 60%;
+  right: 10%;
+  animation-delay: 2s;
+}
+
+/* GLITTER CANVAS — PUSHED BEHIND */
+.background-animation::before {
   content: '';
   position: absolute;
-  width: 2px;
-  height: 2px;
-  background: white;
-  box-shadow: 
-    50px 100px white, 150px 200px white, 250px 300px white,
-    350px 400px white, 450px 500px white, 550px 600px white,
-    650px 700px white, 750px 800px white, 850px 900px white,
-    950px 1000px white, 1050px 1100px white, 1150px 1200px white;
-  animation: fall 5s linear infinite;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation: glitter 15s linear infinite;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
 }
 
-@keyframes fall {
-  0% { transform: translateY(-100vh); }
-  100% { transform: translateY(100vh); }
-}
-
-/* Floating Messages */
-.floating-message {
-  position: absolute;
-  font-size: 1.2rem;
-  font-weight: bold;
-  animation: floatMove 20s linear infinite;
-  opacity: 0.5;
-  white-space: nowrap;
-}
-
-@keyframes floatMove {
-  0% {
-    transform: translate(0, 0) rotate(0deg);
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-100vw, 100vh) rotate(360deg);
-    opacity: 0.5;
-  }
+@keyframes glitter {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
 }
