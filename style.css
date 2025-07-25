@@ -1,74 +1,205 @@
-body {
+/* General Reset */
+body, html {
   margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: radial-gradient(circle, #111, #000);
-  overflow: hidden;
-  color: #fff;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(black, #111);
+  color: white;
+  overflow-x: hidden;
+  min-height: 100vh;
 }
 
-#start-screen {
-  position: relative;
-  height: 100vh;
-  width: 100vw;
-  overflow: hidden;
+/* Screens */
+.screen {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-#floating-messages {
-  position: absolute;
-  top: 20%;
-  width: 100%;
+  justify-content: center;
+  padding: 2em;
   text-align: center;
+  min-height: 100vh;
 }
 
-.rotating-message {
-  font-size: 2rem;
-  color: lime;
-  font-weight: bold;
-  animation: rotateText 10s linear infinite;
+.hidden {
+  display: none;
 }
 
-.rotating-message.smaller {
-  font-size: 1.5rem;
-  color: magenta;
-  animation-duration: 12s;
+/* Start Screen Visuals */
+#start-screen {
+  position: relative;
+  overflow: hidden;
 }
 
-#start-button {
-  margin-top: 300px;
-  padding: 15px 30px;
-  font-size: 1.5rem;
-  background: black;
-  border: 3px solid lime;
-  color: lime;
-  cursor: pointer;
-  border-radius: 10px;
-  box-shadow: 0 0 20px lime;
-  transition: transform 0.3s;
-}
-
-#start-button:hover {
-  transform: scale(1.1);
-  background: lime;
-  color: black;
-}
-
-@keyframes rotateText {
-  0%   { transform: rotate(0deg) translateY(0); }
-  50%  { transform: rotate(180deg) translateY(-20px); }
-  100% { transform: rotate(360deg) translateY(0); }
-}
-#glitter-canvas {
+.background-animation::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+  animation: glitter 10s linear infinite;
+  opacity: 0.5;
   z-index: 0;
 }
 
-#floating-messages, #start-button {
-  position: relative;
+@keyframes glitter {
+  0% { background-position: 0 0; }
+  100% { background-position: 1000px 1000px; }
+}
+
+.rotating-love {
+  font-size: 3em;
+  color: #00ffcc;
+  font-weight: bold;
+  text-shadow: 0 0 10px #0ff;
+  animation: rotate 20s linear infinite;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
+  pointer-events: none;
+}
+
+@keyframes rotate {
+  0% { transform: translateX(-50%) rotate(0deg); }
+  100% { transform: translateX(-50%) rotate(360deg); }
+}
+
+.floating-text {
+  position: absolute;
+  color: #ff66ff;
+  font-size: 1.2em;
+  animation: float 10s ease-in-out infinite alternate;
+  z-index: 1;
+}
+
+.floating-text.delay1 {
+  top: 30%;
+  left: 10%;
+  animation-delay: 1s;
+}
+
+.floating-text.delay2 {
+  top: 50%;
+  right: 15%;
+  animation-delay: 2s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); opacity: 0.8; }
+  100% { transform: translateY(-20px); opacity: 1; }
+}
+
+/* Button */
+button {
+  margin-top: 2em;
+  padding: 1em 2em;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #00ffcc, #0099ff);
+  color: black;
+  box-shadow: 0 0 15px #00ffcc;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+/* Icon Grid */
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 20px;
+  margin-top: 2em;
+  width: 90%;
+  max-width: 1000px;
+}
+
+/* Icon Cards */
+.icon-card {
+  background-color: #111;
+  border: 2px solid #444;
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 0 10px #00ffcc;
+  text-align: center;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.icon-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffff;
+}
+
+.icon-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Dropdown */
+.icon-card select {
+  margin-top: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: #000;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* Modal */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal img {
+  max-width: 80%;
+  max-height: 80%;
+  border: 4px solid white;
+  border-radius: 10px;
+}
+
+.close-preview {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 2em;
+  color: white;
+  cursor: pointer;
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("https://pngimg.com/uploads/confetti/confetti_PNG86980.png");
+  background-repeat: repeat;
+  animation: fall 15s linear infinite;
+  opacity: 0.4;
+  z-index: 1;
+}
+
+@keyframes fall {
+  0% { background-position: 0 -1000px; }
+  100% { background-position: 0 1000px; }
 }
