@@ -1,0 +1,63 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: radial-gradient(circle, #111, #000);
+  overflow: hidden;
+  color: #fff;
+}
+
+#start-screen {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#floating-messages {
+  position: absolute;
+  top: 20%;
+  width: 100%;
+  text-align: center;
+}
+
+.rotating-message {
+  font-size: 2rem;
+  color: lime;
+  font-weight: bold;
+  animation: rotateText 10s linear infinite;
+}
+
+.rotating-message.smaller {
+  font-size: 1.5rem;
+  color: magenta;
+  animation-duration: 12s;
+}
+
+#start-button {
+  margin-top: 300px;
+  padding: 15px 30px;
+  font-size: 1.5rem;
+  background: black;
+  border: 3px solid lime;
+  color: lime;
+  cursor: pointer;
+  border-radius: 10px;
+  box-shadow: 0 0 20px lime;
+  transition: transform 0.3s;
+}
+
+#start-button:hover {
+  transform: scale(1.1);
+  background: lime;
+  color: black;
+}
+
+@keyframes rotateText {
+  0%   { transform: rotate(0deg) translateY(0); }
+  50%  { transform: rotate(180deg) translateY(-20px); }
+  100% { transform: rotate(360deg) translateY(0); }
+}
