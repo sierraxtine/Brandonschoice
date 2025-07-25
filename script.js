@@ -1,4 +1,4 @@
-// Create twinkling stars background
+// Star animation
 const canvas = document.getElementById('stars');
 const ctx = canvas.getContext('2d');
 
@@ -9,7 +9,7 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-let stars = Array(200).fill().map(() => ({
+let stars = Array(300).fill().map(() => ({
   x: Math.random() * canvas.width,
   y: Math.random() * canvas.height,
   r: Math.random() * 1.5 + 0.5,
@@ -31,9 +31,9 @@ function drawStars() {
 }
 drawStars();
 
-// Handle Start button
+// Start button redirects
 document.addEventListener('DOMContentLoaded', () => {
-  const startButton = document.querySelector('.start-button');
+  const startButton = document.getElementById('startButton');
   if (startButton) {
     startButton.addEventListener('click', () => {
       window.location.href = "phase1.html";
