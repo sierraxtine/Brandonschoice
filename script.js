@@ -1,138 +1,119 @@
-let currentPhase = 0;
-const maxSelections = [10, 5, 3];
-let selectedIcons = [];
-let allIcons = [];
-let finalSelection = [];
+const allIcons = Array.from({ length: 16 }, (_, i) => `icons/icon${i + 1}.png`);
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("start-button").addEventListener("click", startPicker);
-  document.getElementById("close-preview").addEventListener("click", () => {
-    document.getElementById("preview-modal").style.display = "none";
-  });
-  loadIcons();
-});
+let currentPhase = 1;
+let selections = {};
+const maxSelections = { 1: 10, 2: 5, 3: 3 };
 
+// 🎬 Start Button Logic
 function startPicker() {
-  document.getElementById("start-screen").classList.add("hidden");
-  showPhase();
+  document.getElementById("start-screen").style.display = "none";
+  loadPhase();
 }
 
-function loadIcons() {
-  for (let i = 1; i <= 16; i++) {
-    allIcons.push(`icons/icon${i}.png`);
-  }
-}
+// 🔁 Load Icons Per Phase
+function loadPhase() {
+  const container = document.getElementById("phase-container");
+  container.innerHTML = `
+    <h2>Phase ${currentPhase}: Select Your Top ${maxSelections[currentPhase]}</h2>
+    <div id="icons-grid" class="grid"></div>
+    <button class="next-btn" onclick="nextPhase()">Next</button>
+  `;
+  container.style.display = "block";
 
-function showPhase() {
-  clearGrid();
-  selectedIcons = [];
-  document.getElementById("phase-screen").classList.remove("hidden");
-  document.getElementById("phase-title").innerText = `Phase ${currentPhase + 1}: Pick Your Top ${maxSelections[currentPhase]}`;
+  const iconGrid = document.getElementById("icons-grid");
+  iconGrid.innerHTML = "";
 
-  const grid = document.getElementById("icons-grid");
-  let iconsToShow = allIcons;
+  const pool = currentPhase === 1 ? allIcons
+             : currentPhase === 2 ? selections[1].map(s => s.image)
+             : selections[2].map(s => s.image);
 
-  // Filter icons based on the previous selection
-  if (currentPhase > 0) {
-    iconsToShow = finalSelection.map(item => item.src);
-  }
-
-  iconsToShow.forEach((src, index) => {
-    const tile = document.createElement("div");
-    tile.className = "icon-tile";
+  pool.forEach((imgSrc, index) => {
+    const wrapper = document.createElement("div");
+    wrapper.className = "icon-wrapper";
 
     const img = document.createElement("img");
-    img.src = src;
+    img.src = imgSrc;
     img.alt = `Icon ${index + 1}`;
-    img.onclick = () => openPreview(src);
+    img.className = "icon-img";
+    img.onclick = () => showPreview(imgSrc);
 
-    const dropdown = document.createElement("select");
-    const noneOption = document.createElement("option");
-    noneOption.value = "";
-    noneOption.text = "-- Rank --";
-    dropdown.appendChild(noneOption);
+    const select = document.createElement("select");
+    select.innerHTML = `<option value="">Rank</option>` +
+      Array.from({ length: maxSelections[currentPhase] }, (_, i) => 
+        `<option value="${i + 1}">${i + 1}</option>`).join("");
+    select.onchange = () => handleSelect(imgSrc, select.value);
 
-    for (let i = 1; i <= maxSelections[currentPhase]; i++) {
-      const option = document.createElement("option");
-      option.value = i;
-      option.text = i;
-      dropdown.appendChild(option);
-    }
-
-    dropdown.addEventListener("change", () => {
-      const existing = selectedIcons.find(item => item.src === src);
-      if (existing) {
-        existing.rank = parseInt(dropdown.value);
-      } else {
-        selectedIcons.push({ src, rank: parseInt(dropdown.value) });
-      }
-      // Remove if empty
-      if (!dropdown.value) {
-        selectedIcons = selectedIcons.filter(item => item.src !== src);
-      }
-    });
-
-    tile.appendChild(img);
-    tile.appendChild(dropdown);
-    grid.appendChild(tile);
+    wrapper.appendChild(img);
+    wrapper.appendChild(select);
+    iconGrid.appendChild(wrapper);
   });
 
-  const nextButton = document.createElement("button");
-  nextButton.className = "neon";
-  nextButton.innerText = currentPhase === 2 ? "Send to Sierra" : "Next Phase";
-  nextButton.onclick = () => nextPhase();
-  grid.appendChild(nextButton);
+  selections[currentPhase] = [];
 }
 
-function openPreview(src) {
-  const modal = document.getElementById("preview-modal");
-  const previewImage = document.getElementById("preview-image");
-  previewImage.src = src;
-  modal.style.display = "flex";
+// 🪞 Show Preview
+function showPreview(src) {
+  document.getElementById("preview-image").src = src;
+  document.getElementById("preview-modal").classList.remove("hidden");
 }
 
-function clearGrid() {
-  const grid = document.getElementById("icons-grid");
-  while (grid.firstChild) {
-    grid.removeChild(grid.firstChild);
+document.getElementById("close-preview").onclick = () => {
+  document.getElementById("preview-modal").classList.add("hidden");
+};
+
+// 🧠 Track User Selections
+function handleSelect(imgSrc, rank) {
+  const phaseList = selections[currentPhase];
+  const existing = phaseList.find(s => s.rank === rank);
+  if (existing) {
+    existing.rank = ""; // clear conflicting rank
   }
+
+  // Remove any previous entry for this image
+  const filtered = phaseList.filter(s => s.image !== imgSrc);
+  filtered.push({ image: imgSrc, rank });
+  selections[currentPhase] = filtered;
 }
 
+// ⏭️ Move to Next Phase
 function nextPhase() {
-  if (selectedIcons.length !== maxSelections[currentPhase]) {
-    alert(`Please select and rank exactly ${maxSelections[currentPhase]} icons.`);
+  if ((selections[currentPhase]?.length || 0) < maxSelections[currentPhase]) {
+    alert(`Please select and rank ${maxSelections[currentPhase]} icons.`);
     return;
   }
 
-  // Sort and keep only selected icons
-  finalSelection = [...selectedIcons].sort((a, b) => a.rank - b.rank);
-
-  if (currentPhase === 2) {
+  if (currentPhase === 3) {
     showFinalScreen();
-  } else {
-    currentPhase++;
-    showPhase();
+    return;
   }
+
+  currentPhase++;
+  loadPhase();
 }
 
+// 💌 Final Submission
 function showFinalScreen() {
-  document.getElementById("phase-screen").classList.add("hidden");
-  document.getElementById("final-screen").classList.remove("hidden");
+  document.getElementById("phase-container").style.display = "none";
+  const final = document.getElementById("final-screen");
+  final.classList.remove("hidden");
 
-  const resultsDiv = document.getElementById("final-results");
-  resultsDiv.innerHTML = "";
+  const resultDiv = document.getElementById("final-results");
+  resultDiv.innerHTML = "<h3>Your Top 3 Picks:</h3>";
+  selections[3]
+    .sort((a, b) => a.rank - b.rank)
+    .forEach(s => {
+      const img = document.createElement("img");
+      img.src = s.image;
+      img.className = "icon-img small";
+      resultDiv.appendChild(img);
+    });
 
-  finalSelection.forEach((item, idx) => {
-    const result = document.createElement("p");
-    result.innerText = `#${idx + 1} - ${item.src}`;
-    resultsDiv.appendChild(result);
-  });
-
-  const sendBtn = document.getElementById("send-button");
-  sendBtn.onclick = () => {
-    const resultText = finalSelection.map((item, idx) => `#${idx + 1}: ${item.src}`).join("\n");
-    const mailto = `mailto:sierraxtine@gmail.com?subject=Brandon's JADE Icon Picks&body=${encodeURIComponent(resultText)}`;
-    window.location.href = mailto;
-    document.getElementById("send-status").innerText = "Sent to Sierra!";
+  document.getElementById("send-button").onclick = () => {
+    const picks = selections[3]
+      .sort((a, b) => a.rank - b.rank)
+      .map(s => `${s.rank}. ${s.image}`)
+      .join("%0A");
+    const mailtoLink = `mailto:sierraxtine@gmail.com?subject=Brandon's JADE Icon Picks&body=${picks}`;
+    window.location.href = mailtoLink;
   };
 }
