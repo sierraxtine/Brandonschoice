@@ -4,46 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JADE Icon Picker</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-  <div id="start-screen" class="screen">
-    <div class="starry-background"></div>
+  <div id="start-screen">
+    <div class="rotating-banner">I LOVE BRANDON BRESSLER</div>
+    <div class="rotating-banner delay">I LOVE BRANDON BRESSLER</div>
 
-    <!-- Floating Love Messages -->
-    <div class="floating-message" style="top: 20%; left: 5%;">Sierra and Brandon Forever</div>
-    <div class="floating-message" style="top: 40%; left: 70%;">I love Brandon Bressler</div>
-    <div class="floating-message" style="top: 65%; left: 30%;">You're My Everything</div>
+    <div class="floating-message top-left">Sierra and Brandon Forever</div>
+    <div class="floating-message top-right">I love Brandon Bressler</div>
+    <div class="floating-message bottom-center">You're My Everything</div>
 
-    <!-- Rotating Love Messages -->
-    <div class="rotating-text">I LOVE BRANDON BRESSLER</div>
-    <div class="rotating-text delayed">I LOVE BRANDON BRESSLER</div>
-    <div class="rotating-text reverse delayed2">I LOVE BRANDON BRESSLER</div>
-
-    <!-- Start Button -->
-    <button id="startBtn" class="start-button">Start Picking Icons</button>
+    <button id="start-button" onclick="startApp()">Start Picking Icons</button>
   </div>
 
-  <div id="phase-container" style="display:none;">
-    <!-- App content will be dynamically inserted here by script.js -->
+  <div id="main-app" style="display: none;">
+    <h1>Phase 1: Pick Your Icons</h1>
+    <!-- More app content goes here -->
   </div>
 
   <script src="script.js"></script>
+
+  <!-- Falling stars script -->
+  <script>
+    function createStar() {
+      const star = document.createElement('div');
+      star.classList.add('star');
+      star.style.left = `${Math.random() * 100}vw`;
+      star.style.animationDuration = `${Math.random() * 3 + 2}s`;
+      document.body.appendChild(star);
+      setTimeout(() => star.remove(), 5000);
+    }
+    setInterval(createStar, 100);
+  </script>
 </body>
 </html>
-<script>
-  function createStar() {
-    const star = document.createElement('div');
-    star.classList.add('star');
-    star.style.left = `${Math.random() * 100}vw`;
-    star.style.animationDuration = `${Math.random() * 3 + 2}s`;
-    document.body.appendChild(star);
-
-    setTimeout(() => {
-      star.remove();
-    }, 5000);
-  }
-
-  setInterval(createStar, 100);
-</script>
-
