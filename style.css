@@ -1,102 +1,91 @@
-/* Base styles */
-body {
+body, html {
   margin: 0;
   padding: 0;
-  background-color: black;
-  font-family: 'Orbitron', sans-serif;
   overflow: hidden;
-  height: 100vh;
-  position: relative;
-  color: #fff;
+  height: 100%;
+  background-color: black;
+  font-family: 'Arial', sans-serif;
 }
 
 canvas#stars {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   z-index: 0;
-  pointer-events: none;
 }
 
-/* Floating neon messages */
-.floating-message {
-  position: absolute;
-  font-weight: bold;
-  font-size: 1.5rem;
-  white-space: nowrap;
-  animation: floatAround 25s linear infinite;
-  opacity: 0.9;
-  z-index: 1;
-  text-shadow: 0 0 10px #fff;
-}
-
-/* Neon color palette */
-.floating-message:nth-child(1) { color: #00ffff; }
-.floating-message:nth-child(2) { color: #ff00ff; }
-.floating-message:nth-child(3) { color: #39ff14; }
-.floating-message:nth-child(4) { color: #ffff00; }
-.floating-message:nth-child(5) { color: #ff1493; }
-.floating-message:nth-child(6) { color: #00ff99; }
-.floating-message:nth-child(7) { color: #ff4500; }
-
-/* Floating motion */
-@keyframes floatAround {
-  0% {
-    transform: translateY(0) translateX(0) rotate(0deg);
-    opacity: 1;
-  }
-  50% {
-    transform: translateY(-30vh) translateX(20vw) rotate(180deg);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translateY(100vh) translateX(-20vw) rotate(360deg);
-    opacity: 1;
-  }
-}
-
-/* Button styling */
-#startButton {
+.start-screen {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: linear-gradient(to right, #00ffff, #ff00ff);
-  border: none;
-  color: black;
-  padding: 15px 35px;
-  font-size: 1.2rem;
-  border-radius: 30px;
-  box-shadow: 0 0 20px #00ffff, 0 0 30px #ff00ff;
-  cursor: pointer;
-  z-index: 2;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-#startButton:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-  box-shadow: 0 0 30px #00ffff, 0 0 40px #ff00ff;
-}
-
-/* Instructions box */
-#instructions {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 2;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 25px;
-  border-radius: 10px;
-  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid cyan;
+  border-radius: 20px;
+  padding: 40px;
   text-align: center;
-  color: #fff;
-  box-shadow: 0 0 20px #00ffff;
+  z-index: 2;
+  box-shadow: 0 0 30px cyan;
+  color: white;
 }
 
-/* Hide content initially (revealed in phases) */
-.phase-content {
-  display: none;
+.start-screen h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.start-screen ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.start-screen li {
+  margin: 8px 0;
+  font-size: 1.1rem;
+}
+
+.start-screen button {
+  padding: 12px 30px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(90deg, cyan, magenta);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 20px cyan;
+  transition: transform 0.3s ease;
+}
+
+.start-screen button:hover {
+  transform: scale(1.1);
+}
+
+/* Floating messages */
+.floating-message {
+  position: absolute;
+  font-weight: bold;
+  font-size: 1.2rem;
+  animation: float 25s linear infinite;
+  white-space: nowrap;
+  opacity: 0.9;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.neon {
+  color: hsl(calc(360 * var(--hue, 0.7)), 100%, 70%);
+  text-shadow: 0 0 8px currentColor, 0 0 12px currentColor;
+}
+
+.delay1 { top: 10%; left: 5%; animation-delay: 2s; }
+.delay2 { top: 20%; right: 10%; animation-delay: 4s; }
+.delay3 { bottom: 15%; left: 20%; animation-delay: 6s; }
+.delay4 { bottom: 5%; right: 15%; animation-delay: 8s; }
+
+@keyframes float {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  50% { transform: translateY(-100px) rotate(180deg); opacity: 0.7; }
+  100% { transform: translateY(0) rotate(360deg); opacity: 1; }
 }
