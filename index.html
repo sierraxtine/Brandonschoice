@@ -4,22 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JADE Icon Picker</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <canvas id="glitterCanvas"></canvas>
-  <div class="background"></div>
+  <canvas id="stars"></canvas>
 
-  <div class="floating-text-container">
-    <div class="floating-text pink">Sierra and Brandon Forever</div>
-    <div class="floating-text pink" style="top: 60px;">I love Brandon Bressler</div>
-    <div class="floating-text pink" style="top: 120px;">You're My Everything</div>
+  <div class="floating-messages">
+    <div class="floating-message neon1">Sierra and Brandon Forever</div>
+    <div class="floating-message neon2">I love Brandon Bressler</div>
+    <div class="floating-message neon3">You're My Everything</div>
   </div>
 
-  <div class="rotating-text">I LOVE BRANDON BRESSLER</div>
-  <div class="rotating-text rotate2">I LOVE BRANDON BRESSLER</div>
+  <!-- Multiply Brandon Bressler messages -->
+  <div class="brandon-clouds">
+    <div class="brandon neon4">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon5">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon6">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon7">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon8">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon9">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon10">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon11">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon12">I LOVE BRANDON BRESSLER</div>
+    <div class="brandon neon13">I LOVE BRANDON BRESSLER</div>
+  </div>
 
-  <button class="start-button" onclick="startPicker()">Start Picking Icons</button>
+  <div class="start-container">
+    <button id="startButton" class="start-button">Start Picking Icons</button>
+  </div>
 
   <script src="script.js"></script>
 </body>
