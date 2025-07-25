@@ -1,12 +1,91 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  font-family: 'Arial', sans-serif;
+  background: radial-gradient(circle, #050505, #000000);
+  color: white;
+}
+
+#start-screen {
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+  background: radial-gradient(ellipse at center, #0a0a0a 0%, #000000 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 0;
+}
+
+.rotating-banner {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  font-size: 5vw;
+  color: cyan;
+  font-weight: bold;
+  transform: translateX(-50%) rotate(90deg);
+  animation: spin 15s linear infinite;
+  white-space: nowrap;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.rotating-banner.delay {
+  animation-delay: 7.5s;
+}
+
+@keyframes spin {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+.floating-message {
+  position: absolute;
+  color: hotpink;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.bottom-center {
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#start-button {
+  background: linear-gradient(90deg, #00ffff, #ff00ff);
+  border: none;
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 0 20px #00ffff, 0 0 40px #ff00ff;
+  z-index: 10;
+  transition: transform 0.2s ease-in-out;
+}
+
+#start-button:hover {
+  transform: scale(1.05);
+}
+
+/* Glitter stars */
 @keyframes fall {
-  0% {
-    transform: translateY(-100px);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100vh);
-    opacity: 0;
-  }
+  0% { transform: translateY(-100px); opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
 }
 
 .star {
@@ -19,112 +98,4 @@
   border-radius: 50%;
   animation: fall linear infinite;
   z-index: 1;
-}
-/* Base Styling */
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Arial Black', sans-serif;
-  overflow: hidden;
-  background-color: #000;
-  color: white;
-}
-
-.screen {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* Space Background with Stars */
-.starry-background {
-  background: url('https://i.imgur.com/fxWzmR5.jpg') no-repeat center center fixed;
-  background-size: cover;
-  filter: brightness(0.6);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -3;
-  animation: stars-move 30s linear infinite;
-}
-
-@keyframes stars-move {
-  from { background-position: 0 0; }
-  to { background-position: -1000px 1000px; }
-}
-
-/* Floating Cute Messages */
-.floating-message {
-  position: absolute;
-  font-size: 1.2rem;
-  color: #ff8ae2;
-  animation: floatText 6s ease-in-out infinite alternate;
-  z-index: 2;
-}
-
-@keyframes floatText {
-  0% { transform: translateY(0); opacity: 0.8; }
-  100% { transform: translateY(-20px); opacity: 1; }
-}
-
-/* Rotating Neon Text */
-.rotating-text {
-  position: absolute;
-  white-space: nowrap;
-  font-size: 2rem;
-  color: #00ffff;
-  opacity: 0.15;
-  transform: rotate(-45deg);
-  animation: rotate 12s linear infinite;
-  z-index: 1;
-  left: -50%;
-  top: 50%;
-}
-
-.rotating-text.delayed {
-  animation-delay: 2s;
-  top: 30%;
-  left: 0%;
-}
-
-.rotating-text.reverse {
-  animation-direction: reverse;
-}
-
-.rotating-text.delayed2 {
-  animation-delay: 4s;
-  top: 70%;
-  left: 10%;
-}
-
-@keyframes rotate {
-  from { transform: rotate(-45deg) translateX(0); }
-  to { transform: rotate(-45deg) translateX(100vw); }
-}
-
-/* Start Button Styling */
-.start-button {
-  position: absolute;
-  left: 50%;
-  top: 70%;
-  transform: translate(-50%, -50%);
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  background: linear-gradient(135deg, #00ffff, #ff00ff);
-  border: none;
-  border-radius: 40px;
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 0 25px #ff00ff88, 0 0 60px #00ffff88;
-  transition: transform 0.3s ease, background 0.3s ease;
-  z-index: 3;
-}
-
-.start-button:hover {
-  transform: translate(-50%, -50%) scale(1.1);
-  background: linear-gradient(135deg, #ff00ff, #00ffff);
 }
