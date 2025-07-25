@@ -1,87 +1,138 @@
+let currentPhase = 0;
+const maxSelections = [10, 5, 3];
+let selectedIcons = [];
+let allIcons = [];
+let finalSelection = [];
+
 document.addEventListener("DOMContentLoaded", () => {
-  const startBtn = document.getElementById("start-btn");
-  const screens = document.querySelectorAll(".screen");
-  const modal = document.getElementById("preview-modal");
-  const previewImg = document.getElementById("preview-img");
-  const closePreview = document.getElementById("close-preview");
-
-  const phases = ["phase1", "phase2", "phase3"];
-  let currentPhase = 0;
-  let selections = [[], [], []];
-
-  const imageCount = 16;
-  const iconPath = "icons/icon";
-
-  function showScreen(id) {
-    screens.forEach(screen => screen.classList.add("hidden"));
-    document.getElementById(id).classList.remove("hidden");
-  }
-
-  function renderGrid(phaseIndex) {
-    const gridId = "grid" + (phaseIndex + 1);
-    const grid = document.getElementById(gridId);
-    grid.innerHTML = "";
-
-    const maxSelect = [10, 5, 3][phaseIndex];
-    for (let i = 1; i <= imageCount; i++) {
-      const card = document.createElement("div");
-      card.className = "icon-card";
-
-      const img = document.createElement("img");
-      img.src = `${iconPath}${i}.png`;
-      img.alt = `Icon ${i}`;
-      img.addEventListener("click", () => {
-        previewImg.src = img.src;
-        modal.classList.remove("hidden");
-      });
-
-      const select = document.createElement("select");
-      const blank = document.createElement("option");
-      blank.value = "";
-      blank.text = "Rank";
-      select.appendChild(blank);
-      for (let j = 1; j <= maxSelect; j++) {
-        const opt = document.createElement("option");
-        opt.value = j;
-        opt.text = j;
-        select.appendChild(opt);
-      }
-      select.addEventListener("change", () => {
-        selections[phaseIndex] = selections[phaseIndex].filter(s => s.img !== img.src);
-        if (select.value) {
-          selections[phaseIndex].push({ img: img.src, rank: parseInt(select.value) });
-        }
-      });
-
-      card.appendChild(img);
-      card.appendChild(select);
-      grid.appendChild(card);
-    }
-  }
-
-  startBtn.addEventListener("click", () => {
-    currentPhase = 0;
-    showScreen(phases[currentPhase]);
-    renderGrid(currentPhase);
+  document.getElementById("start-button").addEventListener("click", startPicker);
+  document.getElementById("close-preview").addEventListener("click", () => {
+    document.getElementById("preview-modal").style.display = "none";
   });
-
-  document.getElementById("next1").addEventListener("click", () => {
-    currentPhase = 1;
-    showScreen(phases[currentPhase]);
-    renderGrid(currentPhase);
-  });
-
-  document.getElementById("next2").addEventListener("click", () => {
-    currentPhase = 2;
-    showScreen(phases[currentPhase]);
-    renderGrid(currentPhase);
-  });
-
-  document.getElementById("finish").addEventListener("click", () => {
-    showScreen("final-screen");
-  });
-
-  closePreview.addEventListener("click", () => {
-    modal.classList.add("hidden");
-  });
+  loadIcons();
 });
+
+function startPicker() {
+  document.getElementById("start-screen").classList.add("hidden");
+  showPhase();
+}
+
+function loadIcons() {
+  for (let i = 1; i <= 16; i++) {
+    allIcons.push(`icons/icon${i}.png`);
+  }
+}
+
+function showPhase() {
+  clearGrid();
+  selectedIcons = [];
+  document.getElementById("phase-screen").classList.remove("hidden");
+  document.getElementById("phase-title").innerText = `Phase ${currentPhase + 1}: Pick Your Top ${maxSelections[currentPhase]}`;
+
+  const grid = document.getElementById("icons-grid");
+  let iconsToShow = allIcons;
+
+  // Filter icons based on the previous selection
+  if (currentPhase > 0) {
+    iconsToShow = finalSelection.map(item => item.src);
+  }
+
+  iconsToShow.forEach((src, index) => {
+    const tile = document.createElement("div");
+    tile.className = "icon-tile";
+
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = `Icon ${index + 1}`;
+    img.onclick = () => openPreview(src);
+
+    const dropdown = document.createElement("select");
+    const noneOption = document.createElement("option");
+    noneOption.value = "";
+    noneOption.text = "-- Rank --";
+    dropdown.appendChild(noneOption);
+
+    for (let i = 1; i <= maxSelections[currentPhase]; i++) {
+      const option = document.createElement("option");
+      option.value = i;
+      option.text = i;
+      dropdown.appendChild(option);
+    }
+
+    dropdown.addEventListener("change", () => {
+      const existing = selectedIcons.find(item => item.src === src);
+      if (existing) {
+        existing.rank = parseInt(dropdown.value);
+      } else {
+        selectedIcons.push({ src, rank: parseInt(dropdown.value) });
+      }
+      // Remove if empty
+      if (!dropdown.value) {
+        selectedIcons = selectedIcons.filter(item => item.src !== src);
+      }
+    });
+
+    tile.appendChild(img);
+    tile.appendChild(dropdown);
+    grid.appendChild(tile);
+  });
+
+  const nextButton = document.createElement("button");
+  nextButton.className = "neon";
+  nextButton.innerText = currentPhase === 2 ? "Send to Sierra" : "Next Phase";
+  nextButton.onclick = () => nextPhase();
+  grid.appendChild(nextButton);
+}
+
+function openPreview(src) {
+  const modal = document.getElementById("preview-modal");
+  const previewImage = document.getElementById("preview-image");
+  previewImage.src = src;
+  modal.style.display = "flex";
+}
+
+function clearGrid() {
+  const grid = document.getElementById("icons-grid");
+  while (grid.firstChild) {
+    grid.removeChild(grid.firstChild);
+  }
+}
+
+function nextPhase() {
+  if (selectedIcons.length !== maxSelections[currentPhase]) {
+    alert(`Please select and rank exactly ${maxSelections[currentPhase]} icons.`);
+    return;
+  }
+
+  // Sort and keep only selected icons
+  finalSelection = [...selectedIcons].sort((a, b) => a.rank - b.rank);
+
+  if (currentPhase === 2) {
+    showFinalScreen();
+  } else {
+    currentPhase++;
+    showPhase();
+  }
+}
+
+function showFinalScreen() {
+  document.getElementById("phase-screen").classList.add("hidden");
+  document.getElementById("final-screen").classList.remove("hidden");
+
+  const resultsDiv = document.getElementById("final-results");
+  resultsDiv.innerHTML = "";
+
+  finalSelection.forEach((item, idx) => {
+    const result = document.createElement("p");
+    result.innerText = `#${idx + 1} - ${item.src}`;
+    resultsDiv.appendChild(result);
+  });
+
+  const sendBtn = document.getElementById("send-button");
+  sendBtn.onclick = () => {
+    const resultText = finalSelection.map((item, idx) => `#${idx + 1}: ${item.src}`).join("\n");
+    const mailto = `mailto:sierraxtine@gmail.com?subject=Brandon's JADE Icon Picks&body=${encodeURIComponent(resultText)}`;
+    window.location.href = mailto;
+    document.getElementById("send-status").innerText = "Sent to Sierra!";
+  };
+}
